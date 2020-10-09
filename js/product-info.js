@@ -25,6 +25,45 @@ function showImagesGallery(array) {
         document.getElementById("productImagesGallery").innerHTML = htmlContentToAppend;
     }
 }
+//Funcion que muestra la galeria como carrusel. Esto es parte del desafiante de la entrega, deje nombres parecidos para hacer cambios rapidos.
+function showImagesGallery2(array){
+    let j=0;
+    let htmlContentToAppend = "";
+
+    htmlContentToAppend += `<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+    <ol class="carousel-indicators">
+      <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>`
+
+    for (let i = 1; i < array.length; i++) {
+        
+
+        htmlContentToAppend += `<li data-target="#carouselExampleIndicators" data-slide-to=" `+ i + `"></li>`
+    }
+    htmlContentToAppend += `</ol>
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img src="` + array[j] + `" class="d-block w-200" alt="La wea">
+      </div>`
+
+    for (j=1 ; j < array.length; j++){
+        let imageSrc = array[j];
+        htmlContentToAppend +=`<div class="carousel-item">
+        <img src="` + imageSrc + `" class="d-block w-200" alt="La wea 2">
+      </div>`
+    }
+    htmlContentToAppend += `</div>
+    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </a>
+  </div>`
+
+  document.getElementById("productImagesGallery").innerHTML = htmlContentToAppend;
+}
 /*
 Funcion para los productos relacionados, el primer termino es el arreglo que contiene los números de los productos relacionados
 el segundo es la lista con todos los productos disponible.Para recorrer saco siempre me paro en el producto con la posicion relativa
@@ -148,7 +187,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
                     productSoldCountHTML.innerHTML = product.soldCount;
                     productCurrencyAndCostHTML.innerHTML = product.currency + ' ' + product.cost;
 
-                    showImagesGallery(product.images);//Llamo a la funcion que muestra la galeria
+                    showImagesGallery2(product.images);//Llamo a la funcion que muestra la galeria
                     showRelatived(product.relatedProducts, lista);//Llamo a la funcion que muestra los productos relacionados
                     getJSONData(PRODUCT_INFO_COMMENTS_URL).then(function (result) {
                         if (result.status === "ok") {
