@@ -48,6 +48,7 @@ function showCarrito(array) {
                     class="fas fa-heart mr-1"></i> Agregar a la wish list </a>
               </div>
               <p class="mb-0"><span><strong>`+ array.articles[j].currency + ` ` + array.articles[j].unitCost + `</strong></span></p>
+              <p class="mb-0" id="cosito`+j+`"><span><strong> Subtotal: `+ array.articles[j].currency +` ` + array.articles[j].unitCost + `</strong></span></p>
             </div>
           </div>
         </div>
@@ -60,10 +61,16 @@ function showCarrito(array) {
 
 
   }
+  sub(array);
   /*Por algún motivo dentro del primer for no anda el updateSub del primer elemento.Si se saca para afuera y se usa en otro for anda en ambos.*/
   for (let i = 0; i < array.articles.length; i++) {
     document.getElementById(i).addEventListener("change", function () {
+
+      document.getElementById("cosito"+i).innerHTML = "<span><strong> Subtotal: "+ array.articles[i].currency +" "+ array.articles[i].unitCost * document.getElementById(i).value + "</strong></span>";
+      //La linea anterior actualiza el precio subtotal de cada producto individual
       updateSub(array);
+      // Actualiza el subtotal de todo
+      
     });
 
   }
@@ -101,11 +108,19 @@ function costoSubTotal(array) {
   }
   document.getElementById("subTotal").innerHTML = "UYU " + subTotal;
   document.getElementById("Total").innerHTML = "UYU " + subTotal;
-
-
-
+}
+//Al principio muestra los sub de cada producto por separado para luego actualizarlo por separado.
+function sub(array){
+  let sub = 0;
+  
+  for (let i = 0; i < array.articles.length; i++) {
+    sub =  array.articles[i].unitCost * array.articles[i].count;
+    console.log(sub);
+    document.getElementById("cosito"+i).innerHTML = "<span><strong> Subtotal: "+ array.articles[i].currency +" "+ sub + "</strong></span>";
+  }
 
 }
+
 /*Funcion que va actualizando los costos a medida que se aumenta las diferentes cantidades.*/
 function updateSub(array) {
 
