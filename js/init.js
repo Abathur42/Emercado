@@ -50,13 +50,30 @@ function cerrarSesion(){
 //que el documento se encuentra cargado, es decir, se encuentran todos los
 //elementos HTML presentes.
 document.addEventListener("DOMContentLoaded", function(e){//Aca es donde meto las cosas
+  let htmlContentToAppend = " ";
   if (localStorage.getItem("Usuario") === null){
-    document.getElementById("dropdownMenuButton").innerHTML = "Anonimo";
+    
+    htmlContentToAppend += `<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+    aria-haspopup="true" aria-expanded="false">Anónimo
+  </button>
+  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+    <a class="dropdown-item" href="index.html">Iniciar sesión</a>`
+
 }
 else{
-  document.getElementById("dropdownMenuButton").innerHTML = localStorage.getItem("Usuario");
+  
+  htmlContentToAppend += `<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+  aria-haspopup="true" aria-expanded="false">`+ localStorage.getItem("Usuario") + `
+</button>
+<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+  <a class="dropdown-item" href="cart.html">Ver carrito</a>
+  <a class="dropdown-item" href="my-profile.html">Perfil</a>
+  <a class="dropdown-item" href="index.html" onclick=cerrarSesion()>Cerrar sesión</a>`
 }
 
-
+document.getElementById("dropdown").innerHTML = htmlContentToAppend;
 
 });
+
+//document.getElementById("dropdownMenuButton").innerHTML = "Anonimo";
+//document.getElementById("dropdownMenuButton").innerHTML = localStorage.getItem("Usuario");

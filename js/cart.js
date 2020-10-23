@@ -6,6 +6,7 @@
 
 let productos = {};
 let j = 0;
+let array = {};
 
 /* Se tomo un template de boostrap para hacer el carrito.En el for solo aparecen los elementos del carrito el resto esta en el HTML */
 function showCarrito(array) {
@@ -48,7 +49,7 @@ function showCarrito(array) {
                     class="fas fa-heart mr-1"></i> Agregar a la wish list </a>
               </div>
               <p class="mb-0"><span><strong>`+ array.articles[j].currency + ` ` + array.articles[j].unitCost + `</strong></span></p>
-              <p class="mb-0" id="cosito`+j+`"><span><strong> Subtotal: `+ array.articles[j].currency +` ` + array.articles[j].unitCost + `</strong></span></p>
+              <p class="mb-0" id="cosito`+ j + `"><span><strong> Subtotal: ` + array.articles[j].currency + ` ` + array.articles[j].unitCost + `</strong></span></p>
             </div>
           </div>
         </div>
@@ -62,29 +63,42 @@ function showCarrito(array) {
 
   }
   sub(array);
+  Total(array);
+
   /*Por algún motivo dentro del primer for no anda el updateSub del primer elemento.Si se saca para afuera y se usa en otro for anda en ambos.*/
   for (let i = 0; i < array.articles.length; i++) {
     document.getElementById(i).addEventListener("change", function () {
 
-      document.getElementById("cosito"+i).innerHTML = "<span><strong> Subtotal: "+ array.articles[i].currency +" "+ array.articles[i].unitCost * document.getElementById(i).value + "</strong></span>";
+      document.getElementById("cosito" + i).innerHTML = "<span><strong> Subtotal: " + array.articles[i].currency + " " + array.articles[i].unitCost * document.getElementById(i).value + "</strong></span>";
       //La linea anterior actualiza el precio subtotal de cada producto individual
       updateSub(array);
       // Actualiza el subtotal de todo
-      
-    });
+      Total(array);
 
+    });
   }
+  for (let y = 1; y < 4; y++) {
+
+    document.getElementById("gridRadios" + y).addEventListener("click", function () {
+
+      Total(array);
+    });
+  }
+
 }
 /*Funcion que muestra el tiempo de envio dependiendo que casilla se tenga seleccionada en shipping */
 function tiempoDeEnvio() {
   document.getElementById("gridRadios1").addEventListener("click", function () {
     document.getElementById("time").innerHTML = "2 a 3 días";
+
   });
   document.getElementById("gridRadios2").addEventListener("click", function () {
     document.getElementById("time").innerHTML = "5 a 8 días";
+
   });
   document.getElementById("gridRadios3").addEventListener("click", function () {
     document.getElementById("time").innerHTML = "12 a 15 días";
+
   });
 }
 
@@ -110,13 +124,13 @@ function costoSubTotal(array) {
   document.getElementById("Total").innerHTML = "UYU " + subTotal;
 }
 //Al principio muestra los sub de cada producto por separado para luego actualizarlo por separado.
-function sub(array){
+function sub(array) {
   let sub = 0;
-  
+
   for (let i = 0; i < array.articles.length; i++) {
-    sub =  array.articles[i].unitCost * array.articles[i].count;
-    console.log(sub);
-    document.getElementById("cosito"+i).innerHTML = "<span><strong> Subtotal: "+ array.articles[i].currency +" "+ sub + "</strong></span>";
+    sub = array.articles[i].unitCost * array.articles[i].count;
+
+    document.getElementById("cosito" + i).innerHTML = "<span><strong> Subtotal: " + array.articles[i].currency + " " + sub + "</strong></span>";
   }
 
 }
@@ -138,9 +152,117 @@ function updateSub(array) {
 
   }
   document.getElementById("subTotal").innerHTML = "UYU " + update;
-  document.getElementById("Total").innerHTML = "UYU " + update;
+  return update;
+
+}
+//Calcula el envio, total y los muestra en pesos uruguayos
+function Total(array) {
+
+  let Total = updateSub(array);
+  let envio = (updateSub(array) * 15) / 100;
+
+  if (document.getElementById("gridRadios1").checked) {
+    Total += (updateSub(array) * 15) / 100;
+    envio = (updateSub(array) * 15) / 100;
+
+  }
+  else if (document.getElementById("gridRadios2").checked) {
+    Total += (updateSub(array) * 7) / 100;
+    envio = (updateSub(array) * 7) / 100;
+
+  }
+  else if (document.getElementById("gridRadios3").checked) {
+    Total += (updateSub(array) * 5) / 100;
+    envio = (updateSub(array) * 5) / 100;
+
+  }
+
+  document.getElementById("Envio").innerHTML = "UYU " + envio;
+  document.getElementById("Total").innerHTML = "UYU " + Total;
 }
 
+//Esta funcion se usa cuando tocas el primer boton en el modal de método de pago,deshabilita y limpia el input de cuenta bancaria.
+function deshabilitarCuentaBancaria() {
+
+  document.getElementById("CB").disabled = true;
+  document.getElementById("TC1").disabled = false;
+  document.getElementById("TC2").disabled = false;
+  document.getElementById("TC3").disabled = false;
+  document.getElementById("TC4").disabled = false;
+  document.getElementById("CB").value = "";
+
+}
+//Lo mismo que la anterior pero esta se activa con el botón de cuenta bancaria y deshabilita y limpia todos los input de tarjeta de credito.
+function deshabilitarTarjetaDeCredito() {
+  document.getElementById("TC1").disabled = true;
+  document.getElementById("TC2").disabled = true;
+  document.getElementById("TC3").disabled = true;
+  document.getElementById("TC4").disabled = true;
+  document.getElementById("CB").disabled = false;
+
+  document.getElementById("TC1").value = "";
+  document.getElementById("TC2").value = "";
+  document.getElementById("TC3").value = "";
+  document.getElementById("TC4").value = "";
+
+}
+
+//Funcion auxiliar que se usa si algún campo esta vacio.
+function AlertaDeCamposVacios() {
+  alert("Faltan rellenar campos");
+}
+//Funcion que SOLO verifica si los campos de métodos de pago estan vacios.
+function verificarMP() {
+  let ver = true;
+  if (!document.getElementById("creditCardPaymentRadio").checked && !document.getElementById("creditCardPaymentRadio2").checked) {
+    alert("Seleccione un método de pago");
+  }
+  else {
+    let i = 1;
+    let j = 0;
+    if (document.getElementById("creditCardPaymentRadio").checked) {
+      for (i; i < 5; i++) {
+        ver = document.getElementById("TC" + i).value != "";
+      }
+    }
+    else if (document.getElementById("creditCardPaymentRadio2").checked) {
+      ver = document.getElementById("CB").value != "";
+    }
+  }
+  return !ver;
+}
+
+//Funcion que SOLO verifica si los campos de direccion  estan vacios.
+function verificarD() {
+
+  let banderita = true;
+  banderita = document.getElementById("direccion").value == "";
+  banderita = document.getElementById("numeroDePuerta").value == "";
+  banderita = document.getElementById("esquina").value == "";
+  banderita = document.getElementById("numeroDeContacto").value == "";
+
+
+  return !banderita;
+}
+
+//Funcion que verifica y alerte si los campos de métodos de pago  estan vacios.
+function verificarMPyAlert() {
+  if (verificarMP()) { AlertaDeCamposVacios(); }
+}
+//Funcion que verifica y alerte si los campos de direccion  estan vacios.
+function verificarDyAlert() {
+  if (!verificarD()) { AlertaDeCamposVacios(); }
+}
+
+//Funcion que se corre cuando apreto "Finalizar compra", mira que los campos requeridos y despliega un mensaje dependiendo de lo que tenga
+function verificarCompra() {
+  if (!verificarMP() && verificarD()) {
+    alert("Compra realizada con éxito");
+  }
+  else {
+    alert("Falta rellenar datos");
+  }
+}
 
 
 
@@ -150,8 +272,11 @@ document.addEventListener("DOMContentLoaded", function (e) {
     if (result.status === "ok") {
       showCarrito(result.data);
 
+
     }
   })
+
   tiempoDeEnvio();
+
 });
 
