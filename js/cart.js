@@ -213,7 +213,7 @@ function AlertaDeCamposVacios() {
 }
 //Funcion que SOLO verifica si los campos de métodos de pago estan vacios.
 function verificarMP() {
-  let ver = true;
+  let vacio = true;
   if (!document.getElementById("creditCardPaymentRadio").checked && !document.getElementById("creditCardPaymentRadio2").checked) {
     alert("Seleccione un método de pago");
   }
@@ -221,28 +221,32 @@ function verificarMP() {
     let i = 1;
     let j = 0;
     if (document.getElementById("creditCardPaymentRadio").checked) {
-      for (i; i < 5; i++) {
-        ver = document.getElementById("TC" + i).value != "";
+      while (vacio && (i<5)) {
+        
+        vacio = document.getElementById("TC" + i).value != "";
+        i++;
       }
+      vacio == (i=5);
+      console.log(vacio);
     }
     else if (document.getElementById("creditCardPaymentRadio2").checked) {
-      ver = document.getElementById("CB").value != "";
+      vacio = document.getElementById("CB").value != "";
     }
   }
-  return !ver;
+  return !vacio;
 }
 
 //Funcion que SOLO verifica si los campos de direccion  estan vacios.
 function verificarD() {
+  
+  
+  let banderita1 = document.getElementById("direccion").value != "";
+  let banderita2 = document.getElementById("numeroDePuerta").value != "";
+  let banderita3 = document.getElementById("esquina").value != "";
+  let banderita4 = document.getElementById("numeroDeContacto").value != "";
 
-  let banderita = true;
-  banderita = document.getElementById("direccion").value == "";
-  banderita = document.getElementById("numeroDePuerta").value == "";
-  banderita = document.getElementById("esquina").value == "";
-  banderita = document.getElementById("numeroDeContacto").value == "";
-
-
-  return !banderita;
+  let banderita = banderita1 && banderita2 && banderita3 && banderita4;
+  return banderita;
 }
 
 //Funcion que verifica y alerte si los campos de métodos de pago  estan vacios.
