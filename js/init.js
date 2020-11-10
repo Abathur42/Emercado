@@ -16,7 +16,7 @@ var hideSpinner = function(){
   document.getElementById("spinner-wrapper").style.display = "none";
 }
 
-
+//Esto ya venía hecho.
 var getJSONData = function(url){
     var result = {};
     showSpinner();
@@ -41,16 +41,20 @@ var getJSONData = function(url){
         return result;
     });
 }
-
+//funcion que elimina los datos almacenados.
 function cerrarSesion(){
     localStorage.removeItem("Usuario");
+    localStorage.removeItem("UsuarioObj");
 }
 
 //Función que se ejecuta una vez que se haya lanzado el evento de
 //que el documento se encuentra cargado, es decir, se encuentran todos los
 //elementos HTML presentes.
-document.addEventListener("DOMContentLoaded", function(e){//Aca es donde meto las cosas
+document.addEventListener("DOMContentLoaded", function(e){
+  
+  
   let htmlContentToAppend = " ";
+  //Si NO tengo usuario cargado solo muestra un boton para iniciar sesion.
   if (localStorage.getItem("Usuario") === null){
     
     htmlContentToAppend += `<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
@@ -60,6 +64,7 @@ document.addEventListener("DOMContentLoaded", function(e){//Aca es donde meto la
     <a class="dropdown-item" href="index.html">Iniciar sesión</a>`
 
 }
+//Si tengo usuario guardado cargo las cosas como pedia la letra.
 else{
   
   htmlContentToAppend += `<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"

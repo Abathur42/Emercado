@@ -40,9 +40,11 @@
       <a class="py-2 d-none d-md-inline-block" href="categories.html">Categorías</a>
       <a class="py-2 d-none d-md-inline-block" href="products.html">Productos</a>
       <a class="py-2 d-none d-md-inline-block" href="sell.html">Vender</a>
-      
-        <div class="dropdown" id="dropdown">
-         <!--<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+
+      <div class="dropdown" id="dropdown">
+        <!--Esto era lo que estaba primero luego lo modifique para que quedara elegante en funcion de si estas logeado o no
+          
+          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false">
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -50,30 +52,119 @@
             <a class="dropdown-item" href="my-profile.html">Perfil</a>
             <a class="dropdown-item" href="index.html" onclick=cerrarSesion()>Cerrar sesion</a>
           </div>-->
-        </div>
-      
+      </div>
+
     </div>
   </nav>
-  <div class="container p-5">
-    <div class="alert alert-danger" role="alert" style="position: relative; width:auto; top: 0;">
-      <h4 class="alert-heading">¡A trabajar! :)</h4>
-      <p>Esta sección corresponde a: Entrega 7 (Fecha de entrega: 8/11/202020) -> Punto 1 y 2.</p>
-      <hr>
-      <p class="mb-0">Para saber qué debes hacer, fijate en la actividad en CREA correspondiente a esta entrega.</p>
+
+  <!-- Muestra el perfil de manera fija si no tenes usario fijo y se modifica según si estas logeado o no con el js. -->
+  <div class="container">
+    <div class="text-center p-4">
+      <h2><strong>Perfil</strong></h2>
+      <p class="lead">Aqui puedes ver y modificar tu perfil.</p>
     </div>
-  </div>
-  <footer class="text-muted bg-light">
     <div class="container">
-      <p>Este sitio forma parte de Desarrollo Web - JAP - 2020</p>
-      <p>Clickea <a target="_blank" href="Letra.pdf">aquí</a> para descargar la letra del obligatorio.</p>
+
+      <div id="imagen" class="text-center p-4">
+        <img id="imagen" src="img/perfil.jpg" alt="asdasd" class="img-thumbnail" width="200">
+      </div>
+      <div class="text-center p-4">
+        <h2>Nombre y Apellido</h2><p id="NombreYApellido">Debe llenar datos</p>
+      </div>
+      <div class="text-center p-4">
+        <h2>Edad</h2><p id="Edad">Debe llenar datos</p>
+      </div>
+      <div class="text-center p-4">
+        <h2>E-mail</h2><p id="mail">Debe llenar datos</p>
+      </div>
+      <div class="text-center p-4">
+        <h2>Teléfono</h2><p id="tel">Debe llenar datos</p>
+      </div>
+      <div class="text-center p-4">
+        <button id="modificarPerfil" type="button" class="btn btn-primary" data-toggle="modal" data-target="#ModPerfil">
+          Modificar perfil
+        </button>
+      </div>
+
+
+      <!-- inicio modal de modificar el perfil-->
+      <div id="ModPerfil" class="modal" tabindex="-1">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Modificar perfil</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body"><!-- Cuerpo del modal -->
+              <div class="container">
+                <div class="row">
+                  <div class="input-group">
+                    <div class="col-sm-8">
+                      <div class="form-group">
+                        <input id="NombreModal" type="text" class="form-control TC" name="Nom" placeholder="Nombre Completo">
+                      </div>
+                    </div>
+                    <div class="col-sm-4">
+                      <div class="form-group">
+                        <input id="EdadModal" type="number" class="form-control TC" name="Eda" placeholder="Edad">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              
+              <div class="row">
+                <div class="col-sm-8">
+                  <div class="form-group">
+                    <input id="MailModal" type="text" class="form-control TC" name="mail" placeholder="Mail">
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-sm-8">
+                  <div class="form-group">
+                    <input id="ImagenModal" type="text" class="form-control TC" name="Imagen" placeholder="URL de la imagen">
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-sm-8">
+                  <div class="form-group">
+                    <input id="TelefonoDeContactoModal" type="number" class="form-control TC" name="contacto"
+                      placeholder="Teléfono de contacto">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          
+            <!-- Fin del cuerpo -->
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            <button type="button" class="btn btn-primary" onclick=GuardaryMostar()>Guardar</button>
+          </div>
+        </div>
+      </div>
+      <!-- Fin del modal -->
+
     </div>
-  </footer>
-  <div class="alert fade alert-success" role="alert" id="alertResult">
-    <span id="resultSpan"></span>
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
   <div id="spinner-wrapper">
     <div class="lds-ring">
       <div></div>

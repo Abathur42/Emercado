@@ -24,7 +24,9 @@
       <a class="py-2 d-none d-md-inline-block" href="sell.html">Vender</a>
       
         <div class="dropdown" id="dropdown">
-          <!--<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+          <!-- Esto era lo que estaba primero luego lo modifique para que quedara elegante en funcion de si estas logeado o no
+            
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false">
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -44,6 +46,7 @@
         <p class="small alert-warning py-3"><strong>Nota: </strong>por simplicidad, cualquiera sea el producto
           seleccionado previamente, siempre se visualizará el presente: <strong>Chevrolet Onix Joy</strong>.</p>
       </div>
+    <!-- Todo se carga en el js-->
       <h3 id="productName"></h3>
       <hr class="my-3">
       <dl>
@@ -88,7 +91,7 @@
         <dt>Agrega un comentario</dt>
         <dd>
           <form>
-            <p class="clasificacion">
+            <p class="clasificacion"><!-- Zona para mostrar las estrellas -->
               <input id="radio1" type="radio" name="estrellas" value="5" onclick=guardarvalor(5)>
               <!--
               --><label for="radio1">★</label>
